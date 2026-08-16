@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject resultPanel;
     [SerializeField] private TextMeshProUGUI resultText;
     [SerializeField] private int scorePerMarble = 10;
+    [SerializeField] private GameObject nextRoundButton;
+    [SerializeField] private string nextSceneName;
 
     private int marbleCount;
     private int score;
@@ -78,10 +80,19 @@ public class GameManager : MonoBehaviour
 
         if (resultText != null)
             resultText.text = cleared ? "Clear" : "Fail";
+
+        if (nextRoundButton != null)
+            nextRoundButton.SetActive(cleared && !string.IsNullOrEmpty(nextSceneName));
     }
 
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadNextRound()
+    {
+        if (!string.IsNullOrEmpty(nextSceneName))
+            SceneManager.LoadScene(nextSceneName);
     }
 }
